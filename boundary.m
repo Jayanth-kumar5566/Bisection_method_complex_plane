@@ -10,17 +10,21 @@ function [ res ] = boundary( f,a,b,c,d )
 %     |                        |
 %    d+-----------------------+c
 S=[a,b;b,c;c,d;d,a]; %like a stack
-A=['y','x','y','x']
+A=['y','x','y','x'];
 for i=1:length(S)
     x=S(i,:);
-    a=x(1,2);
-    b=x(3,4);
+    a=x(1:2);
+    b=x(3:4);
     ax=A(i);
-    if bisection(f,a,b,ax)== 0
-        res='No roots on the boundary'
+    if bisection(f,a,b,ax)~= 0      %This will not find 0 as a root
+        res=bisection(f,a,b,ax);
+        return 
     else
-        res=bisection(f,a,b,ax)
+         res='No roots on the boundary';
     end
 end
 end
 
+%Implementation
+ %boundary(@cpol,[0,3],[3,3],[3,1],[0,1])
+ %boundary(@cpol,[2,0],[3,0],[3,-3],[2,-3])

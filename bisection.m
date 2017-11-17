@@ -4,7 +4,7 @@ function [ root ] = bisection( f,a,b,ax)
 % returns root is there exists a root if not returns 0
 
 if ax=='x'
-    range=[a(2),b(2)]
+    range=[a(2),b(2)];
     dum=a(1);
     low=range(1);
     high=range(2);
@@ -21,6 +21,7 @@ if ax=='x'
             high=mid;
         end
         mid=(high+low)/2;
+        mid_2=b(1);
     end 
 elseif ax=='y'
     range=[a(1),b(1)];
@@ -41,9 +42,18 @@ elseif ax=='y'
             high=mid;
         end
         mid=(high+low)/2;
+        mid_2=b(2);
     end
 end
-root=mid
+if count>=10000     
+    root=0;        %Just a proxy to account for finiteness of while loop
+else
+    if ax=='y'
+        root=mid+mid_2*i;
+    else
+        root=mid_2+mid*i;
+    end
+end
 end
 
 %Note for intervals such as [-x y] need to check
